@@ -47,7 +47,16 @@
       </Route>
     </RouteGuard>
     <Route>
-      <GuardRedirect {currentUser} />
+      {#if $currentUser}
+        <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
+          <h1 class="text-3xl">404</h1>
+          <p class="text-xl">
+            This page does not exist.
+          </p>
+        </div>
+      {:else}
+        <GuardRedirect {currentUser}/>
+      {/if}
     </Route>
   </main>
 </Router>
