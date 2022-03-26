@@ -1,8 +1,8 @@
 <script lang="ts">
   import {Link, Route, Router} from 'svelte-navigator';
   import GuardRedirect from './components/navigator/GuardRedirect.svelte';
-  import RouteGuard from './components/navigator/RouteGuard.svelte';
-  import {currentUser, login, logout} from './stores/currentUser';
+  import LoginPage from './pages/LoginPage.svelte';
+  import {currentUser, logout} from './stores/currentUser';
 </script>
 
 <Router>
@@ -11,6 +11,16 @@
       <Link to={$currentUser ? '/app' : '/'}>
         <span class="font-bold text-white">Hello World</span>
       </Link>
+      {#if $currentUser}
+        <div class="w-8"></div>
+        <Link to="/page1">
+          <span class="text-white">Page1</span>
+        </Link>
+        <div class="w-4"></div>
+        <Link to="/page2">
+          <span class="text-white">Page2</span>
+        </Link>
+      {/if}
       <div class="flex-1"></div>
       {#if $currentUser}
         <a class="font-bold cursor-pointer" href={void(0)} style="color: white" on:click={logout}>log out</a>
@@ -31,23 +41,34 @@
       </div>
     </Route>
     <Route path="/login">
-      <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
-        <h1 class="text-3xl">Login to enable '/app'</h1>
-        <button on:click={() => login({user: 'I am a logged in user'})}>
-          Login
-        </button>
-      </div>
+      <LoginPage/>
     </Route>
-    <RouteGuard {currentUser}>
+    {#if $currentUser}
       <Route path="/app">
         <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
-          <h1 class="text-3xl">This page ('/app') is for logged in users only</h1>
+          <h1 class="text-3xl">This page is for logged in users only</h1>
           <p class="text-xl">
             logging out will redirect you to '/login'
           </p>
         </div>
       </Route>
-    </RouteGuard>
+      <Route path="/page1">
+        <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
+          <h1 class="text-3xl">Page 1</h1>
+          <p class="text-xl">
+            This is page 1.
+          </p>
+        </div>
+      </Route>
+      <Route path="/page2">
+        <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
+          <h1 class="text-3xl">Page 2</h1>
+          <p class="text-xl">
+            This is page 2.
+          </p>
+        </div>
+      </Route>
+    {/if}
     <Route>
       {#if $currentUser}
         <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
@@ -57,7 +78,7 @@
           </p>
         </div>
       {:else}
-        <GuardRedirect {currentUser}/>
+        <GuardRedirect/>
       {/if}
     </Route>
   </main>
