@@ -3,8 +3,6 @@
   import GuardRedirect from './components/navigator/GuardRedirect.svelte';
   import RouteGuard from './components/navigator/RouteGuard.svelte';
   import {currentUser, login, logout} from './stores/currentUser';
-
-  // login({user: 'I am a logged in user'});
 </script>
 
 <Router>

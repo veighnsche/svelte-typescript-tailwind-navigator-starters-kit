@@ -9,8 +9,6 @@
   //                               vvvvvvv
   export let currentUser: Readable<unknown | null>;
 
-  console.log($$slots.default);
-
   $: {
     if ($currentUser) {
       const from = $location.state?.from ?? '/app';
