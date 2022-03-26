@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {link, Route, Router} from 'svelte-navigator';
+  import {Link, Route, Router} from 'svelte-navigator';
   import GuardRedirect from './components/navigator/GuardRedirect.svelte';
   import RouteGuard from './components/navigator/RouteGuard.svelte';
   import {currentUser, login, logout} from './stores/currentUser';
@@ -8,12 +8,16 @@
 <Router>
   <header class="px-2 w-screen bg-slate-500 text-white">
     <nav class="h-10 flex items-center">
-      <a class="font-bold" href={$currentUser ? '/app' : '/'} style="color: white" use:link>Hello World</a>
+      <Link to={$currentUser ? '/app' : '/'}>
+        <span class="font-bold text-white">Hello World</span>
+      </Link>
       <div class="flex-1"></div>
       {#if $currentUser}
-        <a class="font-bold" href={void(0)} style="color: white" on:click={logout}>log out</a>
+        <a class="font-bold cursor-pointer" href={void(0)} style="color: white" on:click={logout}>log out</a>
       {:else}
-        <a class="font-bold" href="/login" style="color: white" use:link>log in</a>
+        <Link to="/login">
+          <a class="font-bold text-white">log in</a>
+        </Link>
       {/if}
     </nav>
   </header>
