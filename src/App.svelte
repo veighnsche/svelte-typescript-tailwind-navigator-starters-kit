@@ -1,6 +1,7 @@
 <script lang="ts">
   import {Link, Route, Router} from 'svelte-navigator';
   import GuardRedirect from './components/navigator/GuardRedirect.svelte';
+  import ScreenPage from './components/ScreenPage.svelte';
   import LoginPage from './pages/LoginPage.svelte';
   import {currentUser, logout} from './stores/currentUser';
 </script>
@@ -33,50 +34,52 @@
   </header>
   <main>
     <Route path="/">
-      <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
+      <ScreenPage>
         <h1 class="text-3xl">Hello World</h1>
         <p class="text-xl">
           This is a simple Svelte app.
         </p>
-      </div>
+      </ScreenPage>
     </Route>
     <Route path="/login">
-      <LoginPage/>
+      <ScreenPage>
+        <LoginPage/>
+      </ScreenPage>
     </Route>
     {#if $currentUser}
       <Route path="/app">
-        <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
+        <ScreenPage>
           <h1 class="text-3xl">This page is for logged in users only</h1>
           <p class="text-xl">
             logging out will redirect you to '/login'
           </p>
-        </div>
+        </ScreenPage>
       </Route>
       <Route path="/page1">
-        <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
+        <ScreenPage>
           <h1 class="text-3xl">Page 1</h1>
           <p class="text-xl">
             This is page 1.
           </p>
-        </div>
+        </ScreenPage>
       </Route>
       <Route path="/page2">
-        <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
+        <ScreenPage>
           <h1 class="text-3xl">Page 2</h1>
           <p class="text-xl">
             This is page 2.
           </p>
-        </div>
+        </ScreenPage>
       </Route>
     {/if}
     <Route>
       {#if $currentUser}
-        <div class="h-[calc(100vh-2.5rem)] w-screen bg-slate-200 flex flex-col justify-center items-center">
+        <ScreenPage>
           <h1 class="text-3xl">404</h1>
           <p class="text-xl">
             This page does not exist.
           </p>
-        </div>
+        </ScreenPage>
       {:else}
         <GuardRedirect/>
       {/if}
